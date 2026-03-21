@@ -8,10 +8,6 @@
         "maxConcurrent": 8,
         "runTimeoutSeconds": 900,
         "archiveAfterMinutes": 120
-      },
-      "sandbox": {
-        "mode": "all",
-        "scope": "agent"
       }
     },
     "list": [

@@ -10,6 +10,7 @@ Usage:
     python install.py                     # default: ~/.openclaw
     python install.py /path/to/openclaw   # custom target
     python install.py --dry-run           # preview without writing
+    python install.py --sandbox           # enable sandbox (requires Docker/Podman with openclaw-sandbox image)
 """
 
 import json
@@ -74,11 +75,12 @@ def resolve_model(target_config: dict) -> dict | None:
     return None
 
 
-def prepare_agents_config(fleet_config: dict, inherited_model: dict | None) -> dict:
+def prepare_agents_config(fleet_config: dict, inherited_model: dict | None, sandbox: bool = False) -> dict:
     """Build the agents block for merging.
 
     - Strips our hardcoded model from agents.defaults
     - Injects the inherited model (or omits if None)
+    - Injects sandbox config only when sandbox=True
     """
     agents = deepcopy(fleet_config.get("agents", {}))
     defaults = agents.get("defaults", {})
@@ -90,12 +92,16 @@ def prepare_agents_config(fleet_config: dict, inherited_model: dict | None) -> d
     if inherited_model:
         defaults["model"] = inherited_model
 
+    # Sandbox: off by default; requires Docker/Podman with openclaw-sandbox image
+    if sandbox:
+        defaults["sandbox"] = {"mode": "non-main", "scope": "agent"}
+
     agents["defaults"] = defaults
 
     return agents
 
 
-def merge_openclaw_json(target_path: Path, fleet_config: dict) -> dict:
+def merge_openclaw_json(target_path: Path, fleet_config: dict, sandbox: bool = False) -> dict:
     """Merge fleet config into existing target openclaw.json."""
     if target_path.exists():
         with open(target_path) as f:
@@ -104,7 +110,7 @@ def merge_openclaw_json(target_path: Path, fleet_config: dict) -> dict:
         target_config = {}
 
     inherited_model = resolve_model(target_config)
-    agents_block = prepare_agents_config(fleet_config, inherited_model)
+    agents_block = prepare_agents_config(fleet_config, inherited_model, sandbox)
 
     # Merge agent list: append fleet agents, skip duplicates by id
     existing_agents = target_config.get("agents", {}).get("list", [])
@@ -163,11 +169,12 @@ def copy_tree(src: Path, dst: Path, dry_run: bool = False):
             print(f"  copy   {target}")
 
 
-def install(target_dir: Path, dry_run: bool = False):
+def install(target_dir: Path, dry_run: bool = False, sandbox: bool = False):
     """Run the full installation."""
     print(f"\n{'[DRY RUN] ' if dry_run else ''}Installing Liquid Fleet 3.0")
-    print(f"  Source: {SCRIPT_DIR}")
-    print(f"  Target: {target_dir}\n")
+    print(f"  Source:  {SCRIPT_DIR}")
+    print(f"  Target:  {target_dir}")
+    print(f"  Sandbox: {'enabled' if sandbox else 'disabled (pass --sandbox to enable)'}\n")
 
     if not target_dir.exists():
         if dry_run:
@@ -194,7 +201,7 @@ def install(target_dir: Path, dry_run: bool = False):
     with open(FLEET_CONFIG_SOURCE) as f:
         fleet_config = json.load(f)
 
-    merged = merge_openclaw_json(target_json_path, fleet_config)
+    merged = merge_openclaw_json(target_json_path, fleet_config, sandbox)
 
     # Report model inheritance
     if target_json_path.exists():
@@ -233,12 +240,13 @@ def install(target_dir: Path, dry_run: bool = False):
 
 def main():
     dry_run = "--dry-run" in sys.argv
-    args = [a for a in sys.argv[1:] if a != "--dry-run"]
+    sandbox = "--sandbox" in sys.argv
+    args = [a for a in sys.argv[1:] if a not in ("--dry-run", "--sandbox")]
 
     target = Path(args[0]) if args else DEFAULT_TARGET
     target = target.resolve()
 
-    install(target, dry_run)
+    install(target, dry_run, sandbox)
 
 
 if __name__ == "__main__":
