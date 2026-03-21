@@ -14,7 +14,7 @@
 
 | Worker Tag | Agent ID | Use When | Tools |
 |------------|----------|----------|-------|
-| #动力与开拓 | `worker-drive` | Implementation, coding, delivery | exec, write, read |
+| #动力与开拓 | `worker-drive` | 实现、编码、交付 | exec, write, read |
 | #结构与风控 | `worker-guard` | Testing, review, validation | exec (test only), read |
 | #感知与策略 | `worker-sense` | Research, analysis, judgment | web_search, web_fetch, read, write |
 
