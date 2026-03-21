@@ -131,6 +131,14 @@ def merge_openclaw_json(target_path: Path, fleet_config: dict, sandbox: bool = F
 
     merged_list.extend(fleet_agents)
 
+    # Rewrite fleet agent workspace paths to absolute paths under target dir
+    target_dir = target_path.parent
+    for agent in merged_list:
+        if "workspace" in agent:
+            ws = Path(agent["workspace"])
+            if not ws.is_absolute():
+                agent["workspace"] = str(target_dir / ws.name)
+
     # Build overlay
     overlay = {}
 
