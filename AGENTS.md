@@ -94,8 +94,8 @@ Only Chief Mate changes primary state via Task Bus. Pilots suggest, Chief Mate d
 
 | Parameter | Value | Enforcement |
 |-----------|-------|-------------|
-| Max active Pilots | 3 | config: main `subagents.maxConcurrent: 3` |
-| Max Workers per Pilot | 2 | config: each pilot `subagents.maxConcurrent: 2` |
-| Max total sessions | 10 | prompt-enforced (OpenClaw has no global session cap) |
+| Max active Pilots | 3 | prompt-enforced (OpenClaw has no per-agent spawn count) |
+| Max Workers per Pilot | 2 | prompt-enforced (OpenClaw has no per-agent spawn count) |
+| Max total sessions | 10 | prompt-enforced |
 | Worker timeout | 900s | config: `agents.defaults.subagents.runTimeoutSeconds` |
 | Session archive | 120min | config: `agents.defaults.subagents.archiveAfterMinutes` |

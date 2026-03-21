@@ -21,8 +21,7 @@
         "name": "Chief Mate",
         "workspace": "./workspace-main",
         "subagents": {
-          "allowAgents": ["pilot-general", "pilot-research", "pilot-build"],
-          "maxConcurrent": 3
+          "allowAgents": ["pilot-general", "pilot-research", "pilot-build"]
         },
         "tools": {
           "allow": [
@@ -41,8 +40,7 @@
         "name": "Pilot General",
         "workspace": "./workspace-pilot-general",
         "subagents": {
-          "allowAgents": ["worker-drive", "worker-guard", "worker-sense"],
-          "maxConcurrent": 2
+          "allowAgents": ["worker-drive", "worker-guard", "worker-sense"]
         },
         "tools": {
           "allow": [
@@ -59,8 +57,7 @@
         "name": "Pilot Research",
         "workspace": "./workspace-pilot-research",
         "subagents": {
-          "allowAgents": ["worker-drive", "worker-guard", "worker-sense"],
-          "maxConcurrent": 2
+          "allowAgents": ["worker-drive", "worker-guard", "worker-sense"]
         },
         "tools": {
           "allow": [
@@ -77,8 +74,7 @@
         "name": "Pilot Build",
         "workspace": "./workspace-pilot-build",
         "subagents": {
-          "allowAgents": ["worker-drive", "worker-guard", "worker-sense"],
-          "maxConcurrent": 2
+          "allowAgents": ["worker-drive", "worker-guard", "worker-sense"]
         },
         "tools": {
           "allow": [
