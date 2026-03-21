@@ -14,9 +14,9 @@
 
 | Worker Tag | Agent ID | Use When | Tools |
 |------------|----------|----------|-------|
-| #动力与开拓 | `worker-drive` | Implementation, coding, delivery | exec, file_write, code_interpret |
-| #结构与风控 | `worker-guard` | Testing, review, validation | exec (test only), file_read |
-| #感知与策略 | `worker-sense` | Research, analysis, judgment | web_search, web_fetch, file_read |
+| #动力与开拓 | `worker-drive` | Implementation, coding, delivery | exec, write, read |
+| #结构与风控 | `worker-guard` | Testing, review, validation | exec (test only), read |
+| #感知与策略 | `worker-sense` | Research, analysis, judgment | web_search, web_fetch, read, write |
 
 When spawning a Worker, use the exact `agentId` from the table above:
 
@@ -29,5 +29,5 @@ sessions_spawn({ agentId: "worker-sense", ... })
 ## Constraints
 
 - One Worker = one objective, no role drift
-- Max 2 Workers per Pilot (MVP)
+- Max 2 Workers per Pilot
 - Workers are leaf nodes — never spawn further

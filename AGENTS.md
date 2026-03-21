@@ -58,28 +58,28 @@ Chief Mate (main)              ← permanent, sole entry point
     ├── Pilot Research   ×N    ← depth-1, research-specialized
     └── Pilot Build      ×N    ← depth-1, implementation-specialized
          │
-         ├── worker-drive (动力与开拓)  ← depth-2, leaf, maxSpawnDepth=0
-         ├── worker-guard (结构与风控)  ← depth-2, leaf, maxSpawnDepth=0
-         └── worker-sense (感知与策略)  ← depth-2, leaf, maxSpawnDepth=0
+         ├── worker-drive (动力与开拓)  ← depth-2, leaf, allowAgents: []
+         ├── worker-guard (结构与风控)  ← depth-2, leaf, allowAgents: []
+         └── worker-sense (感知与策略)  ← depth-2, leaf, allowAgents: []
 ```
 
 ## Agent Inventory
 
 | Agent ID | Role | Depth | Spawns? | Key Tools |
 |----------|------|-------|---------|-----------|
-| main | Chief Mate | 0 | yes (pilots) | sessions_*, exec, file_* |
-| pilot-general | General Pilot | 1 | yes (workers) | sessions_spawn, exec, file_* |
-| pilot-research | Research Pilot | 1 | yes (workers) | sessions_spawn, web_*, file_* |
-| pilot-build | Build Pilot | 1 | yes (workers) | sessions_spawn, exec, code_interpret |
-| worker-drive | #动力与开拓 | 2 | no | exec, file_*, code_interpret |
-| worker-guard | #结构与风控 | 2 | no | exec (read/test), file_read |
-| worker-sense | #感知与策略 | 2 | no | web_*, file_* |
+| main | Chief Mate | 0 | yes (pilots, max 3) | sessions_spawn, sessions_send, read, write, web_search, exec |
+| pilot-general | General Pilot | 1 | yes (workers, max 2) | sessions_spawn, read, write, web_search, exec |
+| pilot-research | Research Pilot | 1 | yes (workers, max 2) | sessions_spawn, read, write, web_search, web_fetch |
+| pilot-build | Build Pilot | 1 | yes (workers, max 2) | sessions_spawn, read, write, exec |
+| worker-drive | #动力与开拓 | 2 | no | read, write, exec |
+| worker-guard | #结构与风控 | 2 | no | read, exec |
+| worker-sense | #感知与策略 | 2 | no | read, write, web_search, web_fetch |
 
 ## Key Design Decisions
 
-- **Bounded recursion**: maxSpawnDepth=2, workers cannot spawn further
+- **Bounded recursion**: `allowAgents` enforces spawn topology (who can spawn whom); workers have `allowAgents: []`
 - **File-based state**: task state lives in files, managed by Task Bus CLI
-- **Parallel task pool**: up to 3 Pilots concurrent (MVP)
+- **Parallel task pool**: up to 3 Pilots concurrent
 - **Explicit Task Cards**: Pilots receive full context, no implicit inheritance
 - **Dual switching**: thread-binding (mode A) or soft-switch (mode B)
 - **Task Bus**: `fleet/bin/taskbus.py` enforces state machine transitions
@@ -90,12 +90,12 @@ Chief Mate (main)              ← permanent, sole entry point
 
 Only Chief Mate changes primary state via Task Bus. Pilots suggest, Chief Mate decides.
 
-## MVP Limits
+## Concurrency Limits
 
-| Parameter | Value |
-|-----------|-------|
-| Max active Pilots | 3 |
-| Max Workers per Pilot | 2 |
-| Max total sessions | 10 |
-| Worker timeout | 900s |
-| Session archive | 120min |
+| Parameter | Value | Enforcement |
+|-----------|-------|-------------|
+| Max active Pilots | 3 | config: main `subagents.maxConcurrent: 3` |
+| Max Workers per Pilot | 2 | config: each pilot `subagents.maxConcurrent: 2` |
+| Max total sessions | 10 | prompt-enforced (OpenClaw has no global session cap) |
+| Worker timeout | 900s | config: `agents.defaults.subagents.runTimeoutSeconds` |
+| Session archive | 120min | config: `agents.defaults.subagents.archiveAfterMinutes` |

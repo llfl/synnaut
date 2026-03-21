@@ -135,20 +135,6 @@ def merge_openclaw_json(target_path: Path, fleet_config: dict) -> dict:
     )
     overlay["agents"]["list"] = merged_list
 
-    # Merge bindings
-    if "bindings" in fleet_config:
-        overlay["bindings"] = deep_merge(
-            target_config.get("bindings", {}),
-            fleet_config["bindings"],
-        )
-
-    # Merge fleet metadata
-    if "fleet" in fleet_config:
-        overlay["fleet"] = deep_merge(
-            target_config.get("fleet", {}),
-            fleet_config["fleet"],
-        )
-
     return deep_merge(target_config, overlay)
 
 

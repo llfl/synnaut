@@ -1,18 +1,10 @@
 {
-  "version": "1.0",
   "gateway": {
-    "name": "Synnaut Fleet",
-    "description": "Liquid Fleet 3.0 - Multi-Agent Orchestration System"
+    "name": "Synnaut Fleet"
   },
   "agents": {
     "defaults": {
-      "model": {
-        "primary": ["claude-opus-4-6"],
-        "fallback": ["claude-sonnet-4-6"]
-      },
       "subagents": {
-        "maxSpawnDepth": 2,
-        "maxChildrenPerAgent": 3,
         "maxConcurrent": 8,
         "runTimeoutSeconds": 900,
         "archiveAfterMinutes": 120
@@ -27,16 +19,18 @@
         "id": "main",
         "default": true,
         "name": "Chief Mate",
-        "description": "Permanent orchestrator. Single entry point for Captain. Manages task registry, dispatches pilots, synthesizes results.",
         "workspace": "./workspace-main",
+        "subagents": {
+          "allowAgents": ["pilot-general", "pilot-research", "pilot-build"],
+          "maxConcurrent": 3
+        },
         "tools": {
           "allow": [
             "sessions_spawn",
             "sessions_list",
-            "sessions_message",
-            "file_read",
-            "file_write",
-            "file_list",
+            "sessions_send",
+            "read",
+            "write",
             "web_search",
             "exec"
           ]
@@ -45,18 +39,16 @@
       {
         "id": "pilot-general",
         "name": "Pilot General",
-        "description": "General-purpose task orchestrator. Decomposes goals, coordinates workers, produces structured reports.",
         "workspace": "./workspace-pilot-general",
         "subagents": {
-          "maxSpawnDepth": 2,
-          "maxChildrenPerAgent": 2
+          "allowAgents": ["worker-drive", "worker-guard", "worker-sense"],
+          "maxConcurrent": 2
         },
         "tools": {
           "allow": [
             "sessions_spawn",
-            "file_read",
-            "file_write",
-            "file_list",
+            "read",
+            "write",
             "web_search",
             "exec"
           ]
@@ -65,18 +57,16 @@
       {
         "id": "pilot-research",
         "name": "Pilot Research",
-        "description": "Research-oriented orchestrator. Information gathering, analysis, competitive intelligence, technical deep-dives.",
         "workspace": "./workspace-pilot-research",
         "subagents": {
-          "maxSpawnDepth": 2,
-          "maxChildrenPerAgent": 2
+          "allowAgents": ["worker-drive", "worker-guard", "worker-sense"],
+          "maxConcurrent": 2
         },
         "tools": {
           "allow": [
             "sessions_spawn",
-            "file_read",
-            "file_write",
-            "file_list",
+            "read",
+            "write",
             "web_search",
             "web_fetch"
           ]
@@ -85,55 +75,45 @@
       {
         "id": "pilot-build",
         "name": "Pilot Build",
-        "description": "Implementation-oriented orchestrator. Coding, building, testing, deployment tasks.",
         "workspace": "./workspace-pilot-build",
         "subagents": {
-          "maxSpawnDepth": 2,
-          "maxChildrenPerAgent": 2
+          "allowAgents": ["worker-drive", "worker-guard", "worker-sense"],
+          "maxConcurrent": 2
         },
         "tools": {
           "allow": [
             "sessions_spawn",
-            "file_read",
-            "file_write",
-            "file_list",
-            "exec",
-            "code_interpret"
+            "read",
+            "write",
+            "exec"
           ]
         }
       },
       {
         "id": "worker-drive",
         "name": "Worker Drive",
-        "description": "#动力与开拓 — Implementation worker. Coding, building, delivering. Leaf node, no further spawning.",
         "workspace": "./workspace-worker-drive",
         "subagents": {
-          "maxSpawnDepth": 0,
-          "maxChildrenPerAgent": 0
+          "allowAgents": []
         },
         "tools": {
           "allow": [
-            "file_read",
-            "file_write",
-            "file_list",
-            "exec",
-            "code_interpret"
+            "read",
+            "write",
+            "exec"
           ]
         }
       },
       {
         "id": "worker-guard",
         "name": "Worker Guard",
-        "description": "#结构与风控 — Validation worker. Testing, reviewing, auditing. Leaf node, read-heavy.",
         "workspace": "./workspace-worker-guard",
         "subagents": {
-          "maxSpawnDepth": 0,
-          "maxChildrenPerAgent": 0
+          "allowAgents": []
         },
         "tools": {
           "allow": [
-            "file_read",
-            "file_list",
+            "read",
             "exec"
           ]
         }
@@ -141,38 +121,19 @@
       {
         "id": "worker-sense",
         "name": "Worker Sense",
-        "description": "#感知与策略 — Intelligence worker. Searching, fetching, analyzing. Leaf node, no exec.",
         "workspace": "./workspace-worker-sense",
         "subagents": {
-          "maxSpawnDepth": 0,
-          "maxChildrenPerAgent": 0
+          "allowAgents": []
         },
         "tools": {
           "allow": [
-            "file_read",
-            "file_write",
-            "file_list",
+            "read",
+            "write",
             "web_search",
             "web_fetch"
           ]
         }
       }
     ]
-  },
-  "bindings": {
-    "defaults": {
-      "agentId": "main"
-    }
-  },
-  "fleet": {
-    "registryPath": "./fleet/registry",
-    "memoryPath": "./fleet/memory",
-    "tasksPath": "./fleet/tasks",
-    "taskIdPrefix": "T",
-    "mvp": {
-      "maxActivePilots": 3,
-      "maxWorkersPerPilot": 2,
-      "maxTotalSessions": 10
-    }
   }
 }

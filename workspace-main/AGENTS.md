@@ -108,7 +108,7 @@ Track these events: `accepted`, `edited`, `rejected`, `retry_requested`, `timed_
 
 ## Constraints
 
-- Max 3 active Pilots simultaneously (MVP)
+- Max 3 active Pilots simultaneously
 - Max 10 total sessions
 - Always write state to files before announcing — files are truth, chat is ephemeral
 - Never assume Pilot context survives restarts — always pass explicit Task Cards
