@@ -40,7 +40,7 @@ cat fleet/memory/synergy-patterns.md
 # Captain style preferences
 cat fleet/memory/captain-preferences.md
 
-# Worker dispatch rules
+# Sailor dispatch rules
 cat fleet/memory/recruiting-rules.md
 ```
 

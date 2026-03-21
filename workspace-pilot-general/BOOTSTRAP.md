@@ -10,7 +10,7 @@
 The 大副 passed a Task Card in the initial message. Extract from it:
 - `TASK_ID` (e.g., T-003)
 - Goal, scope, deadline
-- Whether Workers are permitted
+- Whether Sailors are permitted
 
 If no Task Card was received → ask 大副 to resend it before proceeding.
 
@@ -32,7 +32,7 @@ If STATUS.json shows `state: RUNNING` and HANDOFF.md has content
 cat fleet/memory/recruiting-rules.md
 ```
 
-This tells you which Worker agent IDs to use and when.
+This tells you which Sailor agent IDs to use and when.
 
 ## Step 4 — Write Initial Plan
 

@@ -1,6 +1,6 @@
-# Bootstrap: Worker
+# Bootstrap: Sailor
 
-> Workers are short-lived. No persistent state. No registry.
+> Sailors are short-lived. No persistent state. No registry.
 > This bootstrap is minimal — read objective, execute, return.
 
 ---

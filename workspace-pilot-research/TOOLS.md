@@ -11,7 +11,7 @@ cat fleet/tasks/<TASK_ID>/TASK.md
 cat fleet/memory/recruiting-rules.md
 ```
 
-### `sessions_spawn` — dispatch a Worker
+### `sessions_spawn` — dispatch a Sailor
 
 ```
 # Primary: intelligence gathering
@@ -41,8 +41,8 @@ write("fleet/tasks/<ID>/DECISIONS.md", "<key decisions>")
 
 ### `web_search` / `web_fetch` — direct research
 
-Use when you can answer a sub-question directly rather than dispatching a Worker.
-Dispatching a Worker has overhead — use it when parallel execution has clear benefit.
+Use when you can answer a sub-question directly rather than dispatching a Sailor.
+Dispatching a Sailor has overhead — use it when parallel execution has clear benefit.
 
 ---
 

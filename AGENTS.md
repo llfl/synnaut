@@ -34,12 +34,13 @@ synnaut/
     │   └── active.md                #   active task summary (human-readable)
     ├── memory/
     │   ├── captain-preferences.md   #   Captain style & preferences
+    │   ├── role-names.md            #   canonical role name reference (Chinese ↔ English)
     │   ├── synergy-patterns.md      #   领航员/Pilot + 水手/Sailor collaboration effectiveness
     │   └── recruiting-rules.md      #   领航员/Pilot selection & 水手/Sailor dispatch rules
     └── tasks/
         └── .template/               #   task file templates
-            ├── TASK.md              #     goal, scope, deadline, worker policy, captain style
-            ├── PLAN.md              #     decomposition & worker dispatch plan
+            ├── TASK.md              #     goal, scope, deadline, sailor policy, captain style
+            ├── PLAN.md              #     decomposition & sailor dispatch plan
             ├── CONTEXT.md           #     accumulated context
             ├── DECISIONS.md         #     key decisions log
             ├── STATUS.json          #     machine-readable state + session/thread metadata
@@ -80,7 +81,7 @@ Captain (Human)
 
 ## Key Design Decisions
 
-- **Bounded recursion**: `allowAgents` enforces spawn topology (who can spawn whom); workers have `allowAgents: []`
+- **Bounded recursion**: `allowAgents` enforces spawn topology (who can spawn whom); sailors have `allowAgents: []`
 - **File-based state**: task state lives in files, managed by Task Bus CLI
 - **Parallel task pool**: up to 3 领航员 / Pilots concurrent
 - **Explicit Task Cards**: 领航员 / Pilots receive full context, no implicit inheritance

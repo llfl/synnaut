@@ -8,9 +8,9 @@
 
 (Pilot to fill after analyzing the task)
 
-## Worker Dispatch Plan
+## Sailor Dispatch Plan
 
-| Phase | Worker Agent | Objective | Status |
+| Phase | Sailor Agent | Objective | Status |
 |-------|-------------|-----------|--------|
 | — | — | — | — |
 

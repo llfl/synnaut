@@ -109,12 +109,12 @@ def fmt_task_full(task: dict, status: dict) -> str:
 
     extras = []
 
-    workers = status.get("workerResults", [])
-    if workers:
+    sailors = status.get("workerResults", [])
+    if sailors:
         ww = ", ".join(
-            f"{w.get('agentId','?')}({w.get('status','?')})" for w in workers
+            f"{w.get('agentId','?')}({w.get('status','?')})" for w in sailors
         )
-        extras.append(f"       Workers: {ww}")
+        extras.append(f"       Sailors: {ww}")
 
     last = status.get("lastConclusion", "")
     if last:

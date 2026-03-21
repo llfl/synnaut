@@ -7,7 +7,7 @@
 - Status: (pending)
 - Duration: (pending)
 - Pilot: {PILOT_ID}
-- Workers used: (pending)
+- Sailors used: (pending)
 
 ## What Worked
 

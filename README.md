@@ -30,7 +30,7 @@ This keeps the system auditable and predictable when tasks span multiple session
 ## Architecture
 
 ```text
-Human Operator
+Human Operator (Captain)
     |
     v
 main (Chief Mate)

@@ -14,7 +14,7 @@ cat fleet/tasks/<TASK_ID>/TASK.md
 # Use exec to run whatever the project requires
 ```
 
-### `sessions_spawn` — dispatch Workers
+### `sessions_spawn` — dispatch Sailors
 
 ```
 # Primary: implementation

@@ -31,7 +31,7 @@ OpenClaw 原生擅长 Agent 路由与 sub-agent 执行，但仅靠“能 spawn a
 ## 架构
 
 ```text
-Human Operator
+Human Operator (船长)
     |
     v
 main (大副)

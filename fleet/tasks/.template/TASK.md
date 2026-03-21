@@ -30,10 +30,10 @@
 
 {Expected deliverable format}
 
-## Worker Policy
+## Sailor Policy
 
-- Workers permitted: {yes / no}
-- Max workers: {number}
+- Sailors permitted: {yes / no}
+- Max sailors: {number}
 - Preferred tags: {#动力与开拓 / #结构与风控 / #感知与策略}
 
 ## Captain Style

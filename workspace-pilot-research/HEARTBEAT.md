@@ -1,6 +1,6 @@
 # Heartbeat: Pilot
 
-> These writes happen BEFORE reporting to 大副 or spawning Workers.
+> These writes happen BEFORE reporting to 大副 or spawning Sailors.
 > Every. Single. Time. No exceptions.
 
 ---
@@ -32,7 +32,7 @@ write("fleet/tasks/<TASK_ID>/HANDOFF.md", """
 ## Next Action
 <exactly what happens next>
 
-## Worker Results Summary
+## Sailor Results Summary
 <brief summary of each worker's output so far>
 
 ## Waiting on Captain
@@ -40,21 +40,21 @@ write("fleet/tasks/<TASK_ID>/HANDOFF.md", """
 """)
 ```
 
-## After Spawning a Worker
+## After Spawning a Sailor
 
 ```bash
 python fleet/bin/taskbus.py update <TASK_ID> \
-    --next "Worker <agent-id> dispatched for: <objective>"
+    --next "Sailor <agent-id> dispatched for: <objective>"
 ```
 
 Note the worker's session ID for later collection.
 
-## After Collecting a Worker Result
+## After Collecting a Sailor Result
 
 Append to `fleet/tasks/<TASK_ID>/CONTEXT.md`:
 
 ```bash
-write("fleet/tasks/<TASK_ID>/CONTEXT.md", "<existing content>\n\n## Worker Result: <agent-id>\n<result>")
+write("fleet/tasks/<TASK_ID>/CONTEXT.md", "<existing content>\n\n## Sailor Result: <agent-id>\n<result>")
 ```
 
 ## When Blocked

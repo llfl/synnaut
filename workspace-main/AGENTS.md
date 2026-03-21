@@ -25,7 +25,7 @@ The Task Bus is your primary tool for task state management. Use `exec` to invok
 python fleet/bin/taskbus.py create  "<title>" --pilot <pilot-id> --priority <high|medium|low> \
     --goal "<objective>" --scope-in "<in>" --scope-out "<out>" \
     --deadline "<criteria>" --context "<known info>" \
-    --output-format "<format>" --workers <yes|no> --max-workers <N> \
+    --output-format "<format>" --sailors <yes|no> --max-sailors <N> \
     --worker-tags "<tags>" --report-granularity <brief|detailed|on-demand> \
     --decision-style <autonomous|confirm-first|present-options> \
     --captain-notes "<notes>"
@@ -47,7 +47,7 @@ When Captain gives an instruction:
    - Task ID (auto-increment from registry)
    - Goal, scope, priority, deadline criteria
    - Known context, output format requirements
-   - Whether workers are permitted
+   - Whether sailors are permitted
    - Captain's style preferences
 3. Write task files to `fleet/tasks/{TASK_ID}/`
 4. Spawn appropriate Pilot (`pilot-general`, `pilot-research`, or `pilot-build`)

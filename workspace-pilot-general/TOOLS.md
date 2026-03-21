@@ -16,7 +16,7 @@ cat fleet/tasks/<TASK_ID>/PLAN.md
 cat fleet/memory/recruiting-rules.md
 ```
 
-### `sessions_spawn` — dispatch a Worker
+### `sessions_spawn` — dispatch a Sailor
 
 ```
 sessions_spawn({
@@ -55,9 +55,9 @@ Use for: file inspection, running checks, running tests.
 
 ---
 
-## Worker Dispatch Reference
+## Sailor Dispatch Reference
 
-| Task Type              | Primary Worker   | Secondary Worker |
+| Task Type              | Primary Sailor   | Secondary Sailor |
 |------------------------|-----------------|-----------------|
 | Implementation / code  | worker-drive    | worker-guard    |
 | Research / analysis    | worker-sense    | —               |

@@ -18,9 +18,9 @@
 
 Pilot to read Task Card and begin planning
 
-## Worker Results Summary
+## Sailor Results Summary
 
-(no workers dispatched yet)
+(no sailors dispatched yet)
 
 ## Waiting on Captain
 

@@ -106,8 +106,8 @@ TASK_CARD_DEFAULTS = {
     "deadline": "No explicit deadline",
     "context": "",
     "output_format": "Structured report (Goal/Findings/Risks/Options/Decision/Next Step)",
-    "workers": "yes",
-    "max_workers": "2",
+    "sailors": "yes",
+    "max_sailors": "2",
     "worker_tags": "worker-drive / worker-guard / worker-sense",
     "report_granularity": "brief",
     "decision_style": "present-options",
@@ -147,8 +147,8 @@ def scaffold_task(tid: str, title: str, pilot: str, priority: str,
         "{criterion 2}": "Pilot confirms acceptance criteria met",
         "{Expected deliverable format}":
             card.get("output_format", TASK_CARD_DEFAULTS["output_format"]),
-        "{yes / no}": card.get("workers", TASK_CARD_DEFAULTS["workers"]),
-        "{number}": card.get("max_workers", TASK_CARD_DEFAULTS["max_workers"]),
+        "{yes / no}": card.get("sailors", TASK_CARD_DEFAULTS["sailors"]),
+        "{number}": card.get("max_sailors", TASK_CARD_DEFAULTS["max_sailors"]),
         "{#动力与开拓 / #结构与风控 / #感知与策略}":
             card.get("worker_tags", TASK_CARD_DEFAULTS["worker_tags"]),
         "{brief / detailed / on-demand}":
@@ -191,7 +191,7 @@ def scaffold_task(tid: str, title: str, pilot: str, priority: str,
 
 def cmd_create(args):
     if len(args) < 1:
-        print("Usage: taskbus.py create <title> [--pilot X] [--priority X] [--goal X] [--scope-in X] [--scope-out X] [--deadline X] [--context X] [--output-format X] [--workers yes|no] [--max-workers N] [--worker-tags X] [--report-granularity X] [--decision-style X] [--captain-notes X]")
+        print("Usage: taskbus.py create <title> [--pilot X] [--priority X] [--goal X] [--scope-in X] [--scope-out X] [--deadline X] [--context X] [--output-format X] [--sailors yes|no] [--max-sailors N] [--worker-tags X] [--report-granularity X] [--decision-style X] [--captain-notes X]")
         sys.exit(1)
 
     title = args[0]
@@ -227,11 +227,11 @@ def cmd_create(args):
         elif key == "--output-format" and val:
             card["output_format"] = val
             i += 2
-        elif key == "--workers" and val:
-            card["workers"] = val
+        elif key == "--sailors" and val:
+            card["sailors"] = val
             i += 2
-        elif key == "--max-workers" and val:
-            card["max_workers"] = val
+        elif key == "--max-sailors" and val:
+            card["max_sailors"] = val
             i += 2
         elif key == "--worker-tags" and val:
             card["worker_tags"] = val
