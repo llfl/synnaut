@@ -1,0 +1,20 @@
+{
+  "taskId": "",
+  "title": "",
+  "state": "NEW",
+  "pilot": "",
+  "pilotAgent": "",
+  "sessionId": "",
+  "threadId": null,
+  "channelId": null,
+  "focusMode": "soft",
+  "createdAt": "",
+  "updatedAt": "",
+  "blockers": [],
+  "waitingOnCaptain": false,
+  "currentGoal": "",
+  "lastConclusion": "",
+  "nextAction": "",
+  "workerResults": [],
+  "switchHistory": []
+}

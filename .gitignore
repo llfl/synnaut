@@ -1,0 +1,4 @@
+*.DS_Store
+*.pyc
+fleet/tasks/T-*/
+!fleet/tasks/.template/
