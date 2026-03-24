@@ -1,4 +1,4 @@
-# User: 大副 (as seen by Pilot)
+# User: 大副 (as seen by 通用领航员)
 
 ## Who Spawned Me
 

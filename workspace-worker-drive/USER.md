@@ -1,4 +1,4 @@
-# User: Pilot (as seen by Sailor)
+# User: 领航员 (as seen by 轮机手)
 
 ## Who Spawned Me
 
