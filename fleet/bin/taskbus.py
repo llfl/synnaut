@@ -84,14 +84,32 @@ def save_status(tid: str, status: dict):
 
 def refresh_active(reg: dict):
     active = [t for t in reg["tasks"] if t["state"] not in ("DONE", "FAILED", "ARCHIVED")]
+    waiting = [t for t in active if t["state"] == "WAITING_USER"]
+    blocked = [t for t in active if t["state"] == "BLOCKED"]
+    running = [t for t in active if t["state"] not in ("WAITING_USER", "BLOCKED")]
     lines = ["# Active Tasks\n"]
+    lines.append(f"Active: {len(active)}")
+    lines.append(f"Running: {len(running)}")
+    lines.append(f"Waiting: {len(waiting)}")
+    lines.append(f"Blocked: {len(blocked)}")
+    lines.append("")
     if not active:
         lines.append("No active tasks.\n")
     else:
-        lines.append(f"| ID | Title | State | Pilot | Updated |")
-        lines.append(f"|-----|-------|-------|-------|---------|")
         for t in active:
-            lines.append(f"| {t['taskId']} | {t['title']} | {t['state']} | {t.get('pilot', '—')} | {t.get('updatedAt', '—')} |")
+            status = load_status(t["taskId"])
+            goal = status.get("currentGoal") or t.get("title") or "—"
+            next_action = status.get("nextAction") or "none"
+            blockers = status.get("blockers", [])
+            blocker_text = blockers[0] if blockers else ("waiting on Captain" if status.get("waitingOnCaptain") else "none")
+            lines.append(f"## Task {t['taskId']}: {t.get('title', 'Untitled')}")
+            lines.append(f"State: {t.get('state', '—')}")
+            lines.append(f"Pilot: {t.get('pilot', '—')}")
+            lines.append(f"Goal: {goal}")
+            lines.append(f"Next: {next_action}")
+            lines.append(f"Blockers: {blocker_text}")
+            lines.append(f"Updated: {t.get('updatedAt', '—')}")
+            lines.append("")
         lines.append("")
     ACTIVE_PATH.parent.mkdir(parents=True, exist_ok=True)
     with open(ACTIVE_PATH, "w") as f:

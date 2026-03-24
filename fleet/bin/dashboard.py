@@ -76,30 +76,42 @@ def state_tag(state: str) -> str:
     return f"{color}[{state}]{R}"
 
 
+def display_text(value: str | None, default: str = "—") -> str:
+    if value is None:
+        return default
+    text = str(value).strip()
+    return text if text else default
+
+
+def status_blocker(status: dict) -> str:
+    blockers = status.get("blockers", [])
+    if blockers:
+        return str(blockers[0]).strip()
+    if status.get("waitingOnCaptain"):
+        return "waiting on Captain"
+    return "none"
+
+
 # ---------------------------------------------------------------------------
 # Formatters
 
 def fmt_task_brief(task: dict, status: dict) -> str:
     tid   = task.get("taskId", "?")
     state = task.get("state", "?")
-    title = task.get("title", "Untitled")[:48]
-    pilot = task.get("pilotAgent", "—")
+    title = display_text(task.get("title"), "Untitled")
+    pilot = display_text(task.get("pilotAgent") or task.get("pilot"))
+    goal = display_text(status.get("currentGoal"), title)
+    next_a = display_text(status.get("nextAction"), "none")
+    blockers = display_text(status_blocker(status), "none")
+    updated = display_text(task.get("updatedAt") or status.get("updatedAt"))
 
-    lines = [f"  {B}{tid}{R}  {state_tag(state)}  {title}"]
-    lines.append(f"       Pilot: {pilot}")
-
-    waiting = status.get("waitingOnCaptain", False)
-    blockers = status.get("blockers", [])
-    next_a   = status.get("nextAction", "")
-
-    if waiting:
-        goal = status.get("currentGoal", "")
-        lines.append(f"       {YEL}{B}!! Waiting on you:{R} {goal}")
-    elif blockers:
-        lines.append(f"       {RED}⚠ Blocked:{R} {blockers[0]}")
-    elif next_a:
-        lines.append(f"       Next: {next_a}")
-
+    lines = [f"  {B}## Task {tid}: {title}{R}"]
+    lines.append(f"     State:    {state_tag(state)}")
+    lines.append(f"     Pilot:    {pilot}")
+    lines.append(f"     Goal:     {goal}")
+    lines.append(f"     Next:     {next_a}")
+    lines.append(f"     Blockers: {blockers}")
+    lines.append(f"     Updated:  {updated}")
     return "\n".join(lines)
 
 
@@ -114,17 +126,17 @@ def fmt_task_full(task: dict, status: dict) -> str:
         ww = ", ".join(
             f"{w.get('agentId','?')}({w.get('status','?')})" for w in sailors
         )
-        extras.append(f"       Sailors: {ww}")
+        extras.append(f"     Sailors:  {ww}")
 
     last = status.get("lastConclusion", "")
     if last:
-        extras.append(f"       Last:    {last[:80]}")
+        extras.append(f"     Last:     {last[:80]}")
 
     decisions = load_file(tid, "DECISIONS.md")
     if decisions:
         last_decision = [l for l in decisions.strip().splitlines() if l.strip()]
         if last_decision:
-            extras.append(f"       Decision: {last_decision[-1][:70]}")
+            extras.append(f"     Decision: {last_decision[-1][:70]}")
 
     return brief + ("\n" + "\n".join(extras) if extras else "")
 
@@ -213,28 +225,23 @@ def view_summary(tasks: list, full: bool):
     if not active:
         print(f"\n  {DIM}No active tasks. Tell Chief Mate to start one.{R}")
 
-    # ── Command Reference ─────────────────────────────────────
+    # ── Operations Panel ─────────────────────────────────────
     print(hr("─", DIM))
-    print(f"  {B}HOW TO USE THIS FLEET{R}  {DIM}— tell Chief Mate:{R}")
+    print(f"  {B}OPERATIONS PANEL{R}  {DIM}— fixed command reference{R}")
     print(hr("─", DIM))
-    cmds = [
-        ("Refresh dashboard",  "python fleet/bin/dashboard.py"),
-        ("Task detail",        "python fleet/bin/dashboard.py T-001"),
-        ("Full detail view",   "python fleet/bin/dashboard.py --full"),
-        ("─" * 20,             ""),
-        ("Start new task",     '"new task: <what you want done>"'),
-        ("Switch focus",       '"switch to T-001"'),
-        ("Continue a task",    '"continue T-001: <your reply>"'),
-        ("Pause a task",       '"pause T-001"'),
-        ("End a task",         '"end T-001"'),
-        ("Status report",      '"report all tasks"'),
-        ("Show blockers",      '"show blocked tasks"'),
-    ]
-    for label, cmd in cmds:
-        if cmd:
-            print(f"  {DIM}{label:<22}{R}  {cmd}")
-        else:
-            print(f"  {DIM}{label}{R}")
+    print(f"  {B}View Commands{R}")
+    print(f"  {DIM}{'Refresh dashboard':<22}{R}  python fleet/bin/dashboard.py")
+    print(f"  {DIM}{'Task detail':<22}{R}  python fleet/bin/dashboard.py T-001")
+    print(f"  {DIM}{'Full detail view':<22}{R}  python fleet/bin/dashboard.py --full")
+    print()
+    print(f"  {B}Task Commands{R}")
+    print(f"  {DIM}{'Start new task':<22}{R}  \"new task: <what you want done>\"")
+    print(f"  {DIM}{'Switch focus':<22}{R}  \"switch to T-001\"")
+    print(f"  {DIM}{'Continue task':<22}{R}  \"continue T-001: <your reply>\"")
+    print(f"  {DIM}{'Pause task':<22}{R}  \"pause T-001\"")
+    print(f"  {DIM}{'End task':<22}{R}  \"end T-001\"")
+    print(f"  {DIM}{'Status report':<22}{R}  \"report all tasks\"")
+    print(f"  {DIM}{'Show blockers':<22}{R}  \"show blocked tasks\"")
     print(hr("─", DIM))
     print()
 

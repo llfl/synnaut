@@ -124,10 +124,14 @@ All reports to Captain follow:
 ```
 ## Task {ID}: {Title}
 Status: {STATE}
-Progress: {brief}
+Pilot: {pilot-id}
+Goal: {current goal}
+Next: {recommended next action}
 Blockers: {if any}
-Next: {recommended action}
+Updated: {timestamp or relative freshness}
 ```
+
+Use this field order exactly. If a field is empty, write `none` or `—` instead of inventing a new label.
 
 ## Experience Learning
 
