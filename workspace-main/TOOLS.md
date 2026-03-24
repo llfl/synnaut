@@ -102,6 +102,20 @@ Search the web when Captain asks for information or context.
 
 If step 1 or 2 fails, do not spawn a Pilot and do not imply the task is already underway.
 
+### Normal Continuation Flow
+```
+1. receive Pilot report or task-state change
+2. check:
+   - goal still clear
+   - scope still clear
+   - no high-risk or critical ambiguity
+3. if all true:
+   - exec: taskbus.py update <ID> --state <NEXT_STATE> --next "<next phase>"
+   - continue execution immediately
+4. only if any check fails:
+   - stop and surface the specific decision Captain must make
+```
+
 ### Task Switch Flow
 ```
 1. exec: taskbus.py show <ID>  → load task context

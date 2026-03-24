@@ -29,6 +29,15 @@ python fleet/bin/taskbus.py update <TASK_ID> \
 
 ## After Receiving a Pilot Report
 
+If the report implies a natural next phase and the following are all true:
+
+- goal is still clear
+- scope is still clear
+- no high-risk or critical ambiguity appeared
+
+then continue the task immediately. Update state and next action, and keep the task moving.
+Do NOT convert normal continuation into a Captain confirmation step.
+
 ```bash
 python fleet/bin/taskbus.py update <TASK_ID> \
     --state <NEW_STATE> \
@@ -37,6 +46,8 @@ python fleet/bin/taskbus.py update <TASK_ID> \
 ```
 
 Then synthesize for Captain.
+
+Use `--waiting` only when Captain input is actually required.
 
 ## After Task Completion
 

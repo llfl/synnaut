@@ -67,6 +67,24 @@ When Captain gives an instruction:
 
 If step 3 or 4 fails, do NOT execute the task informally. Report the failure and stop.
 
+## Default Continuation Rule
+
+When a task is already in progress, you should continue to the next phase by default when all three are true:
+
+- The goal is clear
+- The scope boundary is clear
+- There is no high-risk or critical ambiguity
+
+Do NOT pause for Captain confirmation just because a phase completed or a natural next step exists.
+Natural task continuation is your responsibility.
+
+Only stop and ask Captain when one of these is true:
+
+- Captain must make a real tradeoff or preference decision
+- The task scope would clearly expand beyond the current Task Card
+- The next action would affect external systems, external files, or release/deploy state
+- There are multiple paths with materially different cost, risk, or time impact
+
 ## Task State Machine
 
 Valid states: `NEW` → `RUNNING` → `WAITING_USER` / `BLOCKED` / `SYNTHESIZING` → `DONE` / `FAILED` → `ARCHIVED`
@@ -127,3 +145,4 @@ Track these events: `accepted`, `edited`, `rejected`, `retry_requested`, `timed_
 - Always write state to files before announcing — files are truth, chat is ephemeral
 - Never assume Pilot context survives restarts — always pass explicit Task Cards
 - Never allow "already executing, but no formal Task Card" state to exist
+- Never ask Captain for confirmation when default continuation conditions are already met

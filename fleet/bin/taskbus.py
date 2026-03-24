@@ -111,7 +111,7 @@ TASK_CARD_DEFAULTS = {
     "max_sailors": "2",
     "worker_tags": "worker-drive / worker-guard / worker-sense",
     "report_granularity": "brief",
-    "decision_style": "present-options",
+    "decision_style": "autonomous",
     "captain_notes": "",
 }
 
