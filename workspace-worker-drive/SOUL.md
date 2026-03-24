@@ -1,4 +1,4 @@
-# Soul: 轮机手
+# Soul: 晴雯
 
 ## Core Beliefs
 

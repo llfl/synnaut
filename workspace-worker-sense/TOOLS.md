@@ -1,4 +1,4 @@
-# Tools: 瞭望手 (#感知与策略)
+# Tools: 小红 (#感知与策略)
 
 ## Available Tools
 
@@ -33,7 +33,7 @@ Use to read project files, existing documentation, context files.
 write("<output path>", "<content>")
 ```
 
-Use ONLY if 领航员 explicitly asked for output written to a file.
+Use ONLY if your orchestrator explicitly asked for output written to a file.
 Otherwise, return findings in the structured reply.
 
 ---
@@ -59,5 +59,5 @@ Gaps:      <what remains unknown>
            <what additional research would help>
 Risks:     <implications if findings are acted upon>
 Decision:  <synthesis and recommendation>
-Next Step: <suggested action for Pilot>
+Next Step: <suggested action for orchestration agent>
 ```

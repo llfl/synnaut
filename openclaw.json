@@ -14,7 +14,7 @@
       {
         "id": "main",
         "default": true,
-        "name": "大副",
+        "name": "王熙凤",
         "workspace": "./workspace-main",
         "subagents": {
           "allowAgents": [
@@ -37,7 +37,7 @@
       },
       {
         "id": "pilot-general",
-        "name": "通用领航员",
+        "name": "贾宝玉",
         "workspace": "./workspace-pilot-general",
         "subagents": {
           "allowAgents": [
@@ -58,7 +58,7 @@
       },
       {
         "id": "pilot-research",
-        "name": "研究领航员",
+        "name": "林黛玉",
         "workspace": "./workspace-pilot-research",
         "subagents": {
           "allowAgents": [
@@ -79,7 +79,7 @@
       },
       {
         "id": "pilot-build",
-        "name": "构建领航员",
+        "name": "贾探春",
         "workspace": "./workspace-pilot-build",
         "subagents": {
           "allowAgents": [
@@ -99,7 +99,7 @@
       },
       {
         "id": "worker-drive",
-        "name": "轮机手",
+        "name": "晴雯",
         "workspace": "./workspace-worker-drive",
         "subagents": {
           "allowAgents": []
@@ -114,7 +114,7 @@
       },
       {
         "id": "worker-guard",
-        "name": "机械师",
+        "name": "袭人",
         "workspace": "./workspace-worker-guard",
         "subagents": {
           "allowAgents": []
@@ -128,7 +128,7 @@
       },
       {
         "id": "worker-sense",
-        "name": "瞭望手",
+        "name": "小红",
         "workspace": "./workspace-worker-sense",
         "subagents": {
           "allowAgents": []

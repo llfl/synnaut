@@ -122,7 +122,7 @@ def merge_openclaw_json(target_path: Path, fleet_config: dict, sandbox: bool = F
 
     # Fleet agents replace existing ones with same id.
     # Strip default:true from surviving non-fleet agents to ensure
-    # Chief Mate (main) is the sole entry point.
+    # Wang Xifeng (main) is the sole entry point.
     for agent in existing_agents:
         if agent["id"] not in fleet_ids:
             agent = deepcopy(agent)
@@ -235,13 +235,13 @@ def install(target_dir: Path, dry_run: bool = False, sandbox: bool = False):
     agent_ids = [a["id"] for a in merged.get("agents", {}).get("list", [])]
     print(f"\n── Done ──")
     print(f"  Agents installed: {', '.join(agent_ids)}")
-    print(f"  Default agent:    main (Chief Mate)")
+    print(f"  Default agent:    main (Wang Xifeng)")
     print(f"  Fleet registry:   {target_dir / 'fleet' / 'registry'}")
     print(f"  Fleet memory:     {target_dir / 'fleet' / 'memory'}")
     print(f"  Task templates:   {target_dir / 'fleet' / 'tasks' / '.template'}")
 
     if not dry_run:
-        print(f"\n  Fleet is ready. Start OpenClaw and talk to the Chief Mate.")
+        print(f"\n  Fleet is ready. Start OpenClaw and talk to the Wang Xifeng.")
 
 
 # ── CLI ────────────────────────────────────────────────────────────

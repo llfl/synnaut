@@ -1,4 +1,4 @@
-# Bootstrap: Pilot
+# Bootstrap: 贾探春
 
 > Run at the START of every session — whether freshly spawned or respawned after recovery.
 > Do not assume you remember context. Read from files.
@@ -7,12 +7,12 @@
 
 ## Step 1 — Identify My Task
 
-The 大副 passed a Task Card in the initial message. Extract from it:
+Wang Xifeng passed a Task Card in the initial message. Extract from it:
 - `TASK_ID` (e.g., T-003)
 - Goal, scope, deadline
-- Whether Sailors are permitted
+- Whether execution agents are permitted
 
-If no Task Card was received → ask 大副 to resend it before proceeding.
+If no Task Card was received → ask 王熙凤 to resend it before proceeding.
 
 ## Step 2 — Load Task Files
 
@@ -32,7 +32,7 @@ If STATUS.json shows `state: RUNNING` and HANDOFF.md has content
 cat fleet/memory/recruiting-rules.md
 ```
 
-This tells you which Sailor agent IDs to use and when.
+This tells you which agent IDs to use and when.
 
 ## Step 4 — Write Initial Plan
 
@@ -58,4 +58,4 @@ Now proceed with the task. Follow HEARTBEAT.md throughout.
 ---
 
 > If any file is missing or the task directory doesn't exist:
-> Stop. Notify 大副. Do not proceed on incomplete context.
+> Stop. Notify 王熙凤. Do not proceed on incomplete context.

@@ -1,33 +1,33 @@
-# Heartbeat: 大副
+# Heartbeat: 王熙凤
 
-> These writes happen BEFORE announcing anything to Captain.
+> These writes happen BEFORE announcing anything to Jia Mu.
 > Never skip. They make recovery possible after any interruption.
 
 ---
 
-## After Receiving Captain Input
+## After Receiving Jia Mu Input
 
 1. Determine intent (new task / follow-up / switch / end / report)
 2. Resolve all `fleet/...` paths against the OpenClaw config root, not `workspace-main/`
-3. If new task → run `taskbus.py create` BEFORE spawning Pilot
+3. If new task → run `taskbus.py create` BEFORE spawning orchestration agent
 4. Verify formal task records exist:
    - `fleet/registry/tasks.json`
    - `fleet/tasks/<TASK_ID>/TASK.md`
    - `fleet/registry/active.md`
 5. If state change → run `taskbus.py update` BEFORE responding
 
-If step 3 or 4 fails, stop and tell Captain the task was not formally registered.
+If step 3 or 4 fails, stop and tell Jia Mu the task was not formally registered.
 
-## After Dispatching a Pilot
+## After Dispatching a orchestration agent
 
 ```bash
 python fleet/bin/taskbus.py update <TASK_ID> \
     --state RUNNING \
     --session-id <spawned-session-id> \
-    --next "Pilot is executing"
+    --next "orchestration agent is executing"
 ```
 
-## After Receiving a Pilot Report
+## After Receiving a orchestration agent Report
 
 If the report implies a natural next phase and the following are all true:
 
@@ -36,7 +36,7 @@ If the report implies a natural next phase and the following are all true:
 - no high-risk or critical ambiguity appeared
 
 then continue the task immediately. Update state and next action, and keep the task moving.
-Do NOT convert normal continuation into a Captain confirmation step.
+Do NOT convert normal continuation into a Jia Mu confirmation step.
 
 ```bash
 python fleet/bin/taskbus.py update <TASK_ID> \
@@ -45,16 +45,16 @@ python fleet/bin/taskbus.py update <TASK_ID> \
     [--waiting | --no-waiting]
 ```
 
-Then synthesize for Captain.
+Then synthesize for Jia Mu.
 
-Use `--waiting` only when Captain input is actually required.
+Use `--waiting` only when Jia Mu input is actually required.
 
 ## After Task Completion
 
 ```bash
 python fleet/bin/taskbus.py update <TASK_ID> --state DONE
 # Write review
-# Then archive when Captain confirms:
+# Then archive when Jia Mu confirms:
 python fleet/bin/taskbus.py archive <TASK_ID>
 ```
 

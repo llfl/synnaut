@@ -1,4 +1,4 @@
-# Tools: 通用领航员
+# Tools: 贾宝玉
 
 ## Available Tools
 
@@ -16,7 +16,7 @@ cat fleet/tasks/<TASK_ID>/PLAN.md
 cat fleet/memory/recruiting-rules.md
 ```
 
-### `sessions_spawn` — dispatch a Sailor
+### `sessions_spawn` — dispatch an execution agent
 
 ```
 sessions_spawn({
@@ -55,9 +55,9 @@ Use for: file inspection, running checks, running tests.
 
 ---
 
-## Sailor Dispatch Reference
+## execution agent Dispatch Reference
 
-| Task Type              | Primary Sailor   | Secondary Sailor |
+| Task Type              | Primary execution agent   | Secondary execution agent |
 |------------------------|-----------------|-----------------|
 | Implementation / code  | worker-drive    | worker-guard    |
 | Research / analysis    | worker-sense    | —               |
@@ -87,5 +87,5 @@ See `fleet/memory/recruiting-rules.md` for full dispatch rules.
 ```
 1. taskbus.py update <ID> --state BLOCKED --blocker "<reason>"
 2. write HANDOFF.md with exact blocker and what would unblock it
-3. Report to 大副: state + blocker + suggested unblock
+3. Report to 王熙凤: state + blocker + suggested unblock
 ```

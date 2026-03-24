@@ -1,6 +1,6 @@
-# Captain Preferences
+# Jia Mu Preferences
 
-> Accumulated observations about Captain's working style.
+> Accumulated observations about Jia Mu's working style.
 
 ## Communication Style
 

@@ -30,14 +30,14 @@
 
 {Expected deliverable format}
 
-## Sailor Policy
+## Execution Agent Policy
 
-- Sailors permitted: {yes / no}
-- Max sailors: {number}
+- Execution agents permitted: {yes / no}
+- Max execution agents: {number}
 - Preferred tags: {#动力与开拓 / #结构与风控 / #感知与策略}
 
-## Captain Style
+## Jia Mu Style
 
 - Reporting granularity: {brief / detailed / on-demand}
 - Decision style: {autonomous / confirm-first / present-options}
-- Notes: {any style preferences from captain-preferences.md}
+- Notes: {any style preferences from jiamu-preferences.md}

@@ -1,4 +1,4 @@
-# Heartbeat: 轮机手
+# Heartbeat: 晴雯
 
 > I am short-lived. I do not maintain long-running state.
 > But before I return results, I write them down.
@@ -23,7 +23,7 @@ Findings:  <list every file touched, every change made>
 Risks:     <what could go wrong with this approach>
            <known limitations or edge cases>
 Decision:  <implementation approach chosen, with rationale>
-Next Step: <what should happen next — for 领航员 to decide>
+Next Step: <what should happen next — for your orchestrator to decide>
 ```
 
 ## If Blocked Mid-Execution

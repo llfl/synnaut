@@ -1,6 +1,6 @@
-# Heartbeat: Pilot
+# Heartbeat: 林黛玉
 
-> These writes happen BEFORE reporting to 大副 or spawning Sailors.
+> These writes happen BEFORE reporting to 王熙凤 or spawning execution agents.
 > Every. Single. Time. No exceptions.
 
 ---
@@ -32,29 +32,29 @@ write("fleet/tasks/<TASK_ID>/HANDOFF.md", """
 ## Next Action
 <exactly what happens next>
 
-## Sailor Results Summary
+## Execution Agent Results Summary
 <brief summary of each worker's output so far>
 
-## Waiting on Captain
+## Waiting on Jia Mu
 <Yes/No — and what specifically>
 """)
 ```
 
-## After Spawning a Sailor
+## After Spawning an Execution Agent
 
 ```bash
 python fleet/bin/taskbus.py update <TASK_ID> \
-    --next "Sailor <agent-id> dispatched for: <objective>"
+    --next "execution agent <agent-id> dispatched for: <objective>"
 ```
 
 Note the worker's session ID for later collection.
 
-## After Collecting a Sailor Result
+## After Collecting an Execution Agent Result
 
 Append to `fleet/tasks/<TASK_ID>/CONTEXT.md`:
 
 ```bash
-write("fleet/tasks/<TASK_ID>/CONTEXT.md", "<existing content>\n\n## Sailor Result: <agent-id>\n<result>")
+write("fleet/tasks/<TASK_ID>/CONTEXT.md", "<existing content>\n\n## Execution Agent Result: <agent-id>\n<result>")
 ```
 
 ## When Blocked
@@ -65,9 +65,9 @@ python fleet/bin/taskbus.py update <TASK_ID> \
     --blocker "<what is blocking and why>"
 ```
 
-Then update HANDOFF.md. Then notify 大副.
+Then update HANDOFF.md. Then notify 王熙凤.
 
 ## Before Any Pause or Context Switch
 
 Update HANDOFF.md. Verify STATUS.json is current.
-A future Pilot must be able to resume from those two files alone.
+A future orchestrator must be able to resume from those two files alone.

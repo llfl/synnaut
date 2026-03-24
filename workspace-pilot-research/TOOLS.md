@@ -1,4 +1,4 @@
-# Tools: 研究领航员
+# Tools: 林黛玉
 
 ## Available Tools
 
@@ -11,7 +11,7 @@ cat fleet/tasks/<TASK_ID>/TASK.md
 cat fleet/memory/recruiting-rules.md
 ```
 
-### `sessions_spawn` — dispatch a Sailor
+### `sessions_spawn` — dispatch an execution agent
 
 ```
 # Primary: intelligence gathering
@@ -27,7 +27,7 @@ sessions_spawn({
 })
 ```
 
-Max concurrent: 2. Never spawn `worker-drive` from this Pilot.
+Max concurrent: 2. Never spawn `worker-drive` from this orchestration agent.
 
 ### `read` / `write` — task files
 
@@ -41,8 +41,8 @@ write("fleet/tasks/<ID>/DECISIONS.md", "<key decisions>")
 
 ### `web_search` / `web_fetch` — direct research
 
-Use when you can answer a sub-question directly rather than dispatching a Sailor.
-Dispatching a Sailor has overhead — use it when parallel execution has clear benefit.
+Use when you can answer a sub-question directly rather than dispatching an execution agent.
+Dispatching an execution agent has overhead — use it when parallel execution has clear benefit.
 
 ---
 
@@ -80,5 +80,5 @@ Every research output must contain:
 4. If findings need validation → dispatch worker-guard
 5. Synthesize: write DECISIONS.md with conclusions
 6. taskbus.py update --state SYNTHESIZING
-7. Report to 大副 in structured Finding format
+7. Report to 王熙凤 in structured Finding format
 ```

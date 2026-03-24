@@ -1,4 +1,4 @@
-# Heartbeat: 瞭望手
+# Heartbeat: 小红
 
 > Every finding needs a source. Every gap needs to be named.
 
@@ -23,7 +23,7 @@ Gaps:      <what remains unknown or unverified>
            <what additional research would help>
 Risks:     <if acted upon, what could go wrong based on findings>
 Decision:  <synthesis / recommendation>
-Next Step: <suggested action for 领航员>
+Next Step: <suggested action for your orchestrator>
 ```
 
 ## On Conflicting Information
@@ -31,7 +31,7 @@ Next Step: <suggested action for 领航员>
 When sources conflict:
 - Report BOTH versions
 - Label the conflict explicitly
-- Do NOT arbitrate — let 领航员 decide
+- Do NOT arbitrate — let your orchestrator decide
 
 ## If No Information Found
 

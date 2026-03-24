@@ -16,12 +16,12 @@
 
 ## Next Action
 
-Pilot to read Task Card and begin planning
+Orchestrator to read Task Card and begin planning
 
-## Sailor Results Summary
+## Execution Agent Results Summary
 
-(no sailors dispatched yet)
+(no execution agents dispatched yet)
 
-## Waiting on Captain
+## Waiting on Jia Mu
 
 No

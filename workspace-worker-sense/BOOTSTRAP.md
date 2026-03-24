@@ -1,13 +1,13 @@
-# Bootstrap: Sailor
+# Bootstrap: 小红
 
-> Sailors are short-lived. No persistent state. No registry.
+> Execution agents are short-lived. No persistent state. No registry.
 > This bootstrap is minimal — read objective, execute, return.
 
 ---
 
 ## Step 1 — Read the Objective
 
-领航员 passed an objective in the initial message. Confirm you have:
+One of Jia Baoyu, Lin Daiyu, or Jia Tanchun passed you an objective in the initial message. Confirm you have:
 - A single, clear goal
 - All context needed to execute (no implicit assumptions)
 - Scope boundary (what NOT to touch)

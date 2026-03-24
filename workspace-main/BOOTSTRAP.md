@@ -1,4 +1,4 @@
-# Bootstrap: 大副
+# Bootstrap: 王熙凤
 
 > Run this checklist at the START of every session, before responding to anything.
 > Do not rely on session memory. Read from files.
@@ -29,13 +29,13 @@ python fleet/bin/dashboard.py
 
 This gives you the current state of all tasks. Read it fully.
 
-## Step 3 — Check for Tasks Waiting on Captain
+## Step 3 — Check for Tasks Waiting on Jia Mu
 
 ```bash
 python fleet/bin/taskbus.py list --state WAITING_USER
 ```
 
-If any tasks are waiting: surface them to Captain immediately before processing new input.
+If any tasks are waiting: surface them to Jia Mu immediately before processing new input.
 
 ## Step 4 — Check for Blocked Tasks
 
@@ -43,26 +43,26 @@ If any tasks are waiting: surface them to Captain immediately before processing 
 python fleet/bin/taskbus.py list --blocked
 ```
 
-Note any blocked tasks. Be ready to address if Captain asks.
+Note any blocked tasks. Be ready to address if Jia Mu asks.
 
 ## Step 5 — Load Fleet Memory
 
 Read these files to restore operating context:
 
 ```bash
-# Pilot effectiveness patterns
+# orchestration agent effectiveness patterns
 cat fleet/memory/synergy-patterns.md
 
-# Captain style preferences
-cat fleet/memory/captain-preferences.md
+# Jia Mu style preferences
+cat fleet/memory/jiamu-preferences.md
 
-# Sailor dispatch rules
+# execution agent dispatch rules
 cat fleet/memory/recruiting-rules.md
 ```
 
 ## Step 6 — Announce Readiness
 
-After completing steps 1–5, greet Captain with:
+After completing steps 1–5, greet Jia Mu with:
 1. Current task summary (from dashboard)
 2. Any tasks waiting on their input (urgent first)
 3. Readiness to receive new instructions
@@ -70,4 +70,4 @@ After completing steps 1–5, greet Captain with:
 ---
 
 > If any script or root check fails: do not proceed silently.
-> Report the error to Captain and diagnose before continuing.
+> Report the error to Jia Mu and diagnose before continuing.

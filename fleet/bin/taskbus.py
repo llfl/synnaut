@@ -2,7 +2,7 @@
 """
 Liquid Fleet 3.0 — Task Bus
 
-CLI tool for the Chief Mate to manage the task registry.
+CLI tool for Wang Xifeng to manage the task registry.
 Operates on the canonical fleet/ directory under the OpenClaw config root.
 This fleet/ directory is shared runtime state, not a workspace-local folder.
 
@@ -101,7 +101,11 @@ def refresh_active(reg: dict):
             goal = status.get("currentGoal") or t.get("title") or "—"
             next_action = status.get("nextAction") or "none"
             blockers = status.get("blockers", [])
-            blocker_text = blockers[0] if blockers else ("waiting on Captain" if status.get("waitingOnCaptain") else "none")
+            blocker_text = blockers[0] if blockers else (
+                "waiting on Jia Mu"
+                if (status.get("waitingOnJiaMu") or status.get("waitingOnCaptain"))
+                else "none"
+            )
             lines.append(f"## Task {t['taskId']}: {t.get('title', 'Untitled')}")
             lines.append(f"State: {t.get('state', '—')}")
             lines.append(f"Pilot: {t.get('pilot', '—')}")
@@ -130,7 +134,7 @@ TASK_CARD_DEFAULTS = {
     "worker_tags": "worker-drive / worker-guard / worker-sense",
     "report_granularity": "brief",
     "decision_style": "autonomous",
-    "captain_notes": "",
+    "jiamu_notes": "",
 }
 
 
@@ -174,8 +178,8 @@ def scaffold_task(tid: str, title: str, pilot: str, priority: str,
             card.get("report_granularity", TASK_CARD_DEFAULTS["report_granularity"]),
         "{autonomous / confirm-first / present-options}":
             card.get("decision_style", TASK_CARD_DEFAULTS["decision_style"]),
-        "{any style preferences from captain-preferences.md}":
-            card.get("captain_notes", "") or "(see captain-preferences.md)",
+        "{any style preferences from jiamu-preferences.md}":
+            card.get("jiamu_notes", "") or "(see jiamu-preferences.md)",
         "{Context provided in the Task Card}": context,
         "{Information collected during execution}": "(pending)",
         "(initialized from Task Card)": goal,
@@ -210,7 +214,7 @@ def scaffold_task(tid: str, title: str, pilot: str, priority: str,
 
 def cmd_create(args):
     if len(args) < 1:
-        print("Usage: taskbus.py create <title> [--pilot X] [--priority X] [--goal X] [--scope-in X] [--scope-out X] [--deadline X] [--context X] [--output-format X] [--sailors yes|no] [--max-sailors N] [--worker-tags X] [--report-granularity X] [--decision-style X] [--captain-notes X]")
+        print("Usage: taskbus.py create <title> [--pilot X] [--priority X] [--goal X] [--scope-in X] [--scope-out X] [--deadline X] [--context X] [--output-format X] [--sailors yes|no] [--max-sailors N] [--worker-tags X] [--report-granularity X] [--decision-style X] [--jiamu-notes X]")
         sys.exit(1)
 
     title = args[0]
@@ -261,8 +265,8 @@ def cmd_create(args):
         elif key == "--decision-style" and val:
             card["decision_style"] = val
             i += 2
-        elif key == "--captain-notes" and val:
-            card["captain_notes"] = val
+        elif key in ("--jiamu-notes", "--captain-notes") and val:
+            card["jiamu_notes"] = val
             i += 2
         else:
             i += 1
@@ -399,8 +403,8 @@ def cmd_switch(args):
         print(f"  Goal:       {status['currentGoal']}")
     if status.get("nextAction"):
         print(f"  Next:       {status['nextAction']}")
-    if status.get("waitingOnCaptain"):
-        print(f"  ⚠ Waiting on Captain input")
+    if status.get("waitingOnJiaMu") or status.get("waitingOnCaptain"):
+        print(f"  ⚠ Waiting on Jia Mu input")
 
     # Check if session is alive (placeholder — real check depends on OpenClaw API)
     if not entry.get("sessionId"):
@@ -456,10 +460,12 @@ def cmd_update(args):
             status.setdefault("blockers", []).append(val)
             i += 2
         elif key == "--waiting":
-            status["waitingOnCaptain"] = True
+            status["waitingOnJiaMu"] = True
+            status.pop("waitingOnCaptain", None)
             i += 1
         elif key == "--no-waiting":
-            status["waitingOnCaptain"] = False
+            status["waitingOnJiaMu"] = False
+            status.pop("waitingOnCaptain", None)
             i += 1
         else:
             i += 1

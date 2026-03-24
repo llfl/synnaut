@@ -1,13 +1,13 @@
 # Review: {TASK_ID}
 
-> Post-completion review. Written by Chief Mate after task is DONE.
+> Post-completion review. Written by Wang Xifeng after task is DONE.
 
 ## Outcome
 
 - Status: (pending)
 - Duration: (pending)
 - Pilot: {PILOT_ID}
-- Sailors used: (pending)
+- Execution agents used: (pending)
 
 ## What Worked
 
@@ -21,7 +21,7 @@
 
 (to be filled on completion)
 
-## Captain Feedback
+## Jia Mu Feedback
 
 - Event: (pending)
 - Notes: (pending)

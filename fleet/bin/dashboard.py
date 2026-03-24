@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Captain's Bridge — Fleet Status Dashboard
+Jia Mu's Hall — Fleet Status Dashboard
 
 Reads fleet state from files. No LLM, no network. Always accurate.
 
@@ -87,8 +87,8 @@ def status_blocker(status: dict) -> str:
     blockers = status.get("blockers", [])
     if blockers:
         return str(blockers[0]).strip()
-    if status.get("waitingOnCaptain"):
-        return "waiting on Captain"
+    if status.get("waitingOnJiaMu") or status.get("waitingOnCaptain"):
+        return "waiting on Jia Mu"
     return "none"
 
 
@@ -185,7 +185,7 @@ def view_summary(tasks: list, full: bool):
 
     # ── Header ────────────────────────────────────────────────
     print(f"\n{hr('═', B)}")
-    print(f"  {B}LIQUID FLEET — CAPTAIN'S BRIDGE{R}"
+    print(f"  {B}LIQUID FLEET — JIA MU'S HALL{R}"
           f"{'':>20}{DIM}{now}{R}")
     print(hr("═", B))
     print(f"  Active Pilots:  {len(pilot_ids)} / 3   "
@@ -195,7 +195,7 @@ def view_summary(tasks: list, full: bool):
 
     fmt = fmt_task_full if full else fmt_task_brief
 
-    # ── Waiting on Captain ─────────────────────────────────────
+    # ── Waiting on Jia Mu ─────────────────────────────────────
     if waiting:
         print(f"\n{hr('─', YEL + B)}")
         print(f"  {YEL}{B}WAITING ON YOU  ({len(waiting)}){R}")
@@ -223,7 +223,7 @@ def view_summary(tasks: list, full: bool):
             print()
 
     if not active:
-        print(f"\n  {DIM}No active tasks. Tell Chief Mate to start one.{R}")
+        print(f"\n  {DIM}No active tasks. Tell Wang Xifeng to start one.{R}")
 
     # ── Operations Panel ─────────────────────────────────────
     print(hr("─", DIM))

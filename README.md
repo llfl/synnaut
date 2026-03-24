@@ -8,9 +8,9 @@
 Synnaut turns OpenClaw into a structured multi-agent runtime for long-running work.
 Instead of relying on a single chat session to remember everything, it separates the system into:
 
-- one permanent control agent: the Chief Mate
-- task-scoped Pilot agents
-- short-lived Sailor agents
+- one permanent control agent: Wang Xifeng
+- task-scoped orchestration agents
+- short-lived execution agents
 - file-based task state, handoff, and review records
 
 The result is a system that can run multiple tasks in parallel, switch focus safely, and recover from expired sessions without losing the working context.
@@ -35,7 +35,7 @@ The canonical layout is:
   workspace-worker-*/
 ```
 
-If `fleet/bin/taskbus.py` or `fleet/registry/` is missing under `<OPENCLAW_HOME>`, the fleet is not installed or not initialized correctly, and the Chief Mate must not silently start execution.
+If `fleet/bin/taskbus.py` or `fleet/registry/` is missing under `<OPENCLAW_HOME>`, the fleet is not installed or not initialized correctly, and Wang Xifeng must not silently start execution.
 
 ## Why This Design
 
@@ -52,42 +52,42 @@ This keeps the system auditable and predictable when tasks span multiple session
 ## Architecture
 
 ```text
-Human Operator (Captain)
+Human Operator (Jia Mu)
     |
     v
-main (Chief Mate)
+main (Wang Xifeng)
     |
     +-- fleet/bin/taskbus.py
     |      create / list / show / switch / update / archive
     |
-    +-- pilot-general   (General Pilot / general orchestration)
-    +-- pilot-research  (Research Pilot / research orchestration)
-    +-- pilot-build     (Build Pilot / implementation orchestration)
+    +-- pilot-general   (Jia Baoyu / general orchestration)
+    +-- pilot-research  (Lin Daiyu / research orchestration)
+    +-- pilot-build     (Jia Tanchun / implementation orchestration)
              |
-             +-- worker-drive  (Engineer / implement and deliver)
-             +-- worker-guard  (Mechanic / test and validate)
-             +-- worker-sense  (Lookout / search and analyze)
+             +-- worker-drive  (Qingwen / implement and deliver)
+             +-- worker-guard  (Xiren / test and validate)
+             +-- worker-sense  (Xiaohong / search and analyze)
 ```
 
 ### Agent Roles
 
 | Layer | Agent ID | Display Role | Responsibility |
 |-------|----------|--------------|----------------|
-| Control plane | `main` | Chief Mate | Receives user requests, creates tasks, selects Pilots, tracks state, synthesizes outputs |
-| Task orchestration | `pilot-general` | General Pilot | Flexible task decomposition across mixed work |
-| Task orchestration | `pilot-research` | Research Pilot | Research-heavy workflows, source gathering, comparison, analysis |
-| Task orchestration | `pilot-build` | Build Pilot | Implementation-heavy workflows, code changes, validation loops |
-| Execution | `worker-drive` | Engineer | Build, edit, implement, and deliver concrete outputs |
-| Execution | `worker-guard` | Mechanic | Review, test, validate, and enforce constraints |
-| Execution | `worker-sense` | Lookout | Search, fetch, inspect, and analyze information |
+| Control plane | `main` | Wang Xifeng | Receives user requests, creates tasks, selects orchestration agents, tracks state, synthesizes outputs |
+| Task orchestration | `pilot-general` | Jia Baoyu | Flexible task decomposition across mixed work |
+| Task orchestration | `pilot-research` | Lin Daiyu | Research-heavy workflows, source gathering, comparison, analysis |
+| Task orchestration | `pilot-build` | Jia Tanchun | Implementation-heavy workflows, code changes, validation loops |
+| Execution | `worker-drive` | Qingwen | Build, edit, implement, and deliver concrete outputs |
+| Execution | `worker-guard` | Xiren | Review, test, validate, and enforce constraints |
+| Execution | `worker-sense` | Xiaohong | Search, fetch, inspect, and analyze information |
 
 ### Bounded Recursion
 
 Synnaut uses an explicit two-hop topology:
 
-- `main` can spawn only Pilots
-- Pilots can spawn only Sailors
-- Sailors cannot spawn additional agents
+- `main` can spawn only orchestration agents
+- orchestration agents can spawn only execution agents
+- execution agents cannot spawn additional agents
 
 This is enforced through `allowAgents` in [`openclaw.json`](openclaw.json).
 
@@ -106,7 +106,7 @@ The operator gives a request to `main`. The system first decides whether the req
 
 ### 2. Task Registration
 
-Before any Pilot is spawned, `main` writes the task to the file-based control plane through [`fleet/bin/taskbus.py`](fleet/bin/taskbus.py).
+Before any orchestration agent is spawned, `main` writes the task to the file-based control plane through [`fleet/bin/taskbus.py`](fleet/bin/taskbus.py).
 
 This creates:
 
@@ -117,31 +117,31 @@ This creates:
 
 This makes the task card the source of truth instead of the transient chat state.
 
-For a new task, `taskbus.py create` is the required entrypoint. It must succeed before any Pilot is spawned.
+For a new task, `taskbus.py create` is the required entrypoint. It must succeed before any orchestration agent is spawned.
 
-### 3. Pilot Dispatch
+### 3. Orchestration Agent Dispatch
 
-`main` selects one Pilot based on task shape:
+`main` selects one orchestration agent based on task shape:
 
 - `pilot-build` for implementation-heavy work
 - `pilot-research` for research-heavy work
 - `pilot-general` for mixed or ambiguous work
 
-The Pilot receives explicit task context rather than inheriting hidden conversation state.
+The orchestration agent receives explicit task context rather than inheriting hidden conversation state.
 
-### 4. Sailor Execution
+### 4. Execution Agent Dispatch
 
-If the Pilot needs parallel sub-work, it may dispatch Sailors:
+If the orchestration agent needs parallel sub-work, it may dispatch execution agents:
 
-- `worker-drive` (Engineer) for implementation
-- `worker-guard` (Mechanic) for review and validation
-- `worker-sense` (Lookout) for research and information gathering
+- `worker-drive` (Qingwen) for implementation
+- `worker-guard` (Xiren) for review and validation
+- `worker-sense` (Xiaohong) for research and information gathering
 
-Sailors are leaf nodes. They return focused results and exit. They do not own task state.
+Execution agents are leaf nodes. They return focused results and exit. They do not own task state.
 
 ### 5. Synthesis
 
-The Pilot merges Sailor outputs into a task-level result and reports back to `main`.
+The orchestration agent merges execution agent outputs into a task-level result and reports back to `main`.
 `main` remains the only agent that changes primary task state.
 
 ### 6. Switch or Recover
@@ -180,7 +180,7 @@ Synnaut keeps orchestration state on disk, not only in prompts.
 NEW -> RUNNING -> WAITING_USER / BLOCKED / SYNTHESIZING -> DONE / FAILED -> ARCHIVED
 ```
 
-Only `main` is allowed to advance primary task state. Pilots can recommend state changes, but they do not own the registry.
+Only `main` is allowed to advance primary task state. orchestration agents can recommend state changes, but they do not own the registry.
 
 ## Task Switching Model
 
@@ -195,16 +195,16 @@ This makes the design portable across channels with different session models.
 
 The current repository is designed around a conservative operating model:
 
-- up to 3 active Pilots as an orchestration policy
-- up to 2 Sailors per Pilot as an orchestration policy
-- 900-second Sailor timeout via OpenClaw sub-agent defaults
+- up to 3 active orchestration agents as an orchestration policy
+- up to 2 execution agents per orchestration agent as an orchestration policy
+- 900-second execution agent timeout via OpenClaw sub-agent defaults
 - 120-minute session archive window via OpenClaw sub-agent defaults
 
 The first two are workflow limits enforced by prompts and control logic. The latter two are runtime defaults configured in [`openclaw.json`](openclaw.json).
 
 ## Write-Before-Act Rule
 
-The Chief Mate's operating rule is:
+Wang Xifeng's operating rule is:
 
 ```text
 Receive -> Write -> Act -> Write -> Report
@@ -228,9 +228,9 @@ Request:
 Chain:
 
 1. `main` creates a task card and assigns `pilot-build`
-2. `pilot-build` dispatches `worker-drive` (Engineer) to implement the change
-3. `pilot-build` dispatches `worker-guard` (Mechanic) to review and validate the output
-4. the Pilot synthesizes findings and returns a structured report
+2. `pilot-build` dispatches `worker-drive` (Qingwen) to implement the change
+3. `pilot-build` dispatches `worker-guard` (Xiren) to review and validate the output
+4. the orchestration agent synthesizes findings and returns a structured report
 5. `main` updates the task state and presents the result to the operator
 
 Why this matters:
@@ -244,9 +244,9 @@ Request:
 Chain:
 
 1. `main` creates a task and assigns `pilot-research`
-2. `pilot-research` dispatches `worker-sense` (Lookout) to gather and compare sources
-3. if needed, `worker-guard` (Mechanic) cross-checks claims or verifies consistency
-4. the Pilot produces a structured recommendation with tradeoffs
+2. `pilot-research` dispatches `worker-sense` (Xiaohong) to gather and compare sources
+3. if needed, `worker-guard` (Xiren) cross-checks claims or verifies consistency
+4. the orchestration agent produces a structured recommendation with tradeoffs
 5. `main` records the conclusion and next step
 
 Why this matters:
@@ -263,9 +263,9 @@ Requests:
 Chain:
 
 1. `main` opens separate task records for both requests
-2. each task gets its own Pilot session and status file
+2. each task gets its own orchestration agent session and status file
 3. switching focus updates the active task context without overwriting the other task
-4. if one Pilot session expires, `main` can recover from `HANDOFF.md` and `STATUS.json`
+4. if one orchestration agent session expires, `main` can recover from `HANDOFF.md` and `STATUS.json`
 
 Why this matters:
 The system treats multitasking as a first-class workflow instead of forcing every task into one linear conversation.

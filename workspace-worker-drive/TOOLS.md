@@ -1,4 +1,4 @@
-# Tools: 轮机手 (#动力与开拓)
+# Tools: 晴雯 (#动力与开拓)
 
 ## Available Tools
 
@@ -58,5 +58,5 @@ Findings:  <every file touched>
            - <path>: <what changed>
 Risks:     <limitations, edge cases, assumptions made>
 Decision:  <approach chosen and why>
-Next Step: <suggested follow-up for Pilot>
+Next Step: <suggested follow-up for orchestration agent>
 ```

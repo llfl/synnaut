@@ -1,4 +1,4 @@
-# Tools: 大副
+# Tools: 王熙凤
 
 ## Available Tools
 
@@ -24,7 +24,7 @@ python fleet/bin/taskbus.py switch  <TASK_ID>
 python fleet/bin/taskbus.py update  <TASK_ID> --state <S> [options]
 python fleet/bin/taskbus.py archive <TASK_ID>
 
-# Dashboard — Captain-facing status view
+# Dashboard — Jia Mu-facing status view
 python fleet/bin/dashboard.py
 python fleet/bin/dashboard.py --full
 python fleet/bin/dashboard.py <TASK_ID>
@@ -37,7 +37,7 @@ cat fleet/registry/tasks.json
 ```
 
 ### `sessions_spawn`
-Start a Pilot session for a task.
+Start an orchestration agent session for a task.
 
 ```
 sessions_spawn({
@@ -47,10 +47,10 @@ sessions_spawn({
 ```
 
 **Always include the complete Task Card in `initialMessage`.**
-Pilots do not inherit your memory. They start cold.
+orchestration agents do not inherit your memory. They start cold.
 
 ### `sessions_list`
-Check which Pilot sessions are currently alive.
+Check which orchestration agent sessions are currently alive.
 
 ```
 sessions_list()
@@ -59,7 +59,7 @@ sessions_list()
 Use before spawning to avoid duplicates. Use before switching to verify liveness.
 
 ### `sessions_send`
-Send a follow-up message to an existing Pilot session.
+Send a follow-up message to an existing orchestration agent session.
 
 ```
 sessions_send({ sessionId: "<id>", message: "<steering or reply>" })
@@ -70,7 +70,7 @@ Read any file in the fleet directory.
 
 ```
 read("fleet/tasks/T-001/HANDOFF.md")
-read("fleet/memory/captain-preferences.md")
+read("fleet/memory/jiamu-preferences.md")
 ```
 
 ### `write`
@@ -82,7 +82,7 @@ write("fleet/memory/synergy-patterns.md", "<updated content>")
 ```
 
 ### `web_search`
-Search the web when Captain asks for information or context.
+Search the web when Jia Mu asks for information or context.
 
 ---
 
@@ -96,15 +96,15 @@ Search the web when Captain asks for information or context.
    - fleet/tasks/<ID>/TASK.md
    - fleet/registry/active.md
 3. exec: taskbus.py show <ID>  → read Task Card back to verify
-4. sessions_spawn: pilot with Task Card as initialMessage
+4. sessions_spawn: orchestration agent with Task Card as initialMessage
 5. exec: taskbus.py update <ID> --state RUNNING --session-id <spawned-id>
 ```
 
-If step 1 or 2 fails, do not spawn a Pilot and do not imply the task is already underway.
+If step 1 or 2 fails, do not spawn an orchestration agent and do not imply the task is already underway.
 
 ### Normal Continuation Flow
 ```
-1. receive Pilot report or task-state change
+1. receive orchestration agent report or task-state change
 2. check:
    - goal still clear
    - scope still clear
@@ -113,15 +113,15 @@ If step 1 or 2 fails, do not spawn a Pilot and do not imply the task is already 
    - exec: taskbus.py update <ID> --state <NEXT_STATE> --next "<next phase>"
    - continue execution immediately
 4. only if any check fails:
-   - stop and surface the specific decision Captain must make
+   - stop and surface the specific decision Jia Mu must make
 ```
 
 ### Task Switch Flow
 ```
 1. exec: taskbus.py show <ID>  → load task context
-2. sessions_list()             → check if Pilot session alive
+2. sessions_list()             → check if orchestration agent session alive
 3a. If alive:   sessions_send to existing session
-3b. If dead:    read HANDOFF.md, respawn Pilot with recovery context
+3b. If dead:    read HANDOFF.md, respawn orchestration agent with recovery context
 4. exec: taskbus.py switch <ID>
 ```
 

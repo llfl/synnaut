@@ -1,4 +1,4 @@
-# Tools: 构建领航员
+# Tools: 贾探春
 
 ## Available Tools
 
@@ -14,7 +14,7 @@ cat fleet/tasks/<TASK_ID>/TASK.md
 # Use exec to run whatever the project requires
 ```
 
-### `sessions_spawn` — dispatch Sailors
+### `sessions_spawn` — dispatch execution agents
 
 ```
 # Primary: implementation
@@ -54,7 +54,7 @@ Every significant implementation MUST go through a quality gate:
 3. IMMEDIATELY spawn worker-guard with: "Review the following changes for correctness..."
 4. worker-guard reports: pass / fail + findings
 5. If fail → worker-drive iterates
-6. If pass → report to 大副 as DONE
+6. If pass → report to 王熙凤 as DONE
 ```
 
 Do NOT report build completion without at least one guard pass.
@@ -73,5 +73,5 @@ Do NOT report build completion without at least one guard pass.
 5. Iterate if needed
 6. write CONTEXT.md: what was built, what changed
 7. taskbus.py update --state SYNTHESIZING
-8. Report to 大副 with deliverables
+8. Report to 王熙凤 with deliverables
 ```

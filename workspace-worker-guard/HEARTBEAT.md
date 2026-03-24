@@ -1,4 +1,4 @@
-# Heartbeat: 机械师
+# Heartbeat: 袭人
 
 > Validation requires rigor. Document every step.
 
