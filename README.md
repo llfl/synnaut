@@ -15,6 +15,28 @@ Instead of relying on a single chat session to remember everything, it separates
 
 The result is a system that can run multiple tasks in parallel, switch focus safely, and recover from expired sessions without losing the working context.
 
+## Runtime Root Contract
+
+Synnaut has one canonical runtime root: the OpenClaw configuration directory that contains `openclaw.json`.
+
+- `fleet/` lives under that OpenClaw root
+- every `workspace-*` directory lives under that same OpenClaw root
+- paths like `fleet/bin/taskbus.py` are always resolved from the OpenClaw root
+- `fleet/` is never interpreted as a directory inside `workspace-main/` or any other agent workspace
+
+The canonical layout is:
+
+```text
+<OPENCLAW_HOME>/
+  openclaw.json
+  fleet/
+  workspace-main/
+  workspace-pilot-*/
+  workspace-worker-*/
+```
+
+If `fleet/bin/taskbus.py` or `fleet/registry/` is missing under `<OPENCLAW_HOME>`, the fleet is not installed or not initialized correctly, and the Chief Mate must not silently start execution.
+
 ## Why This Design
 
 OpenClaw is strong at agent routing and sub-agent execution, but raw agent spawning alone is not enough for reliable orchestration. Synnaut adds the missing control layer:
@@ -94,6 +116,8 @@ This creates:
 - a full task card, context file, plan file, decision log, handoff file, review file, and status record
 
 This makes the task card the source of truth instead of the transient chat state.
+
+For a new task, `taskbus.py create` is the required entrypoint. It must succeed before any Pilot is spawned.
 
 ### 3. Pilot Dispatch
 
@@ -177,6 +201,22 @@ The current repository is designed around a conservative operating model:
 - 120-minute session archive window via OpenClaw sub-agent defaults
 
 The first two are workflow limits enforced by prompts and control logic. The latter two are runtime defaults configured in [`openclaw.json`](openclaw.json).
+
+## Write-Before-Act Rule
+
+The Chief Mate's operating rule is:
+
+```text
+Receive -> Write -> Act -> Write -> Report
+```
+
+For every new task, the first `Write` must complete these artifacts under `<OPENCLAW_HOME>/fleet`:
+
+- `fleet/registry/tasks.json`
+- `fleet/tasks/T-xxx/TASK.md`
+- `fleet/registry/active.md`
+
+If those files are not written yet, the task is not formally in progress.
 
 ## Study Cases
 

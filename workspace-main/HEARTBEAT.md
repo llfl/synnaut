@@ -8,8 +8,15 @@
 ## After Receiving Captain Input
 
 1. Determine intent (new task / follow-up / switch / end / report)
-2. If new task → run `taskbus.py create` BEFORE spawning Pilot
-3. If state change → run `taskbus.py update` BEFORE responding
+2. Resolve all `fleet/...` paths against the OpenClaw config root, not `workspace-main/`
+3. If new task → run `taskbus.py create` BEFORE spawning Pilot
+4. Verify formal task records exist:
+   - `fleet/registry/tasks.json`
+   - `fleet/tasks/<TASK_ID>/TASK.md`
+   - `fleet/registry/active.md`
+5. If state change → run `taskbus.py update` BEFORE responding
+
+If step 3 or 4 fails, stop and tell Captain the task was not formally registered.
 
 ## After Dispatching a Pilot
 
@@ -54,3 +61,4 @@ Review output. If any task has stale state, correct it now.
 
 > Rhythm: Receive → Write → Act → Write → Report
 > The second Write is not optional.
+> The first Write is also not optional: no Task Card, no execution.

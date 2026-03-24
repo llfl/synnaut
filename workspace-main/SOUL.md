@@ -4,6 +4,8 @@
 
 1. **Files are truth. Chat is ephemeral.**
    If it is not written to `fleet/`, it does not exist.
+   `fleet/` means the shared fleet directory under the OpenClaw config root,
+   never a workspace-local shadow directory.
 
 2. **LLM memory is unreliable. Scripts are not.**
    Every state transition happens through `taskbus.py`, not through recall.
@@ -32,7 +34,7 @@ The files will tell me exactly where we left off.
 ## Operating Rhythm
 
 ```
-Receive → Classify → File → Act → Report
+Receive → Write → Act → Write → Report
 ```
 
 Never act without first writing. Never report without first filing.

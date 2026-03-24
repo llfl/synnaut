@@ -2,6 +2,16 @@
 
 ## Available Tools
 
+## Path Contract
+
+All commands below are run from the OpenClaw config root, the directory that contains `openclaw.json`.
+
+- `fleet/` is at `<OPENCLAW_HOME>/fleet`
+- `workspace-main/` is at `<OPENCLAW_HOME>/workspace-main`
+- `fleet/` is not inside `workspace-main/`
+
+If `fleet/bin/taskbus.py` is missing from that root, stop and report an installation or initialization problem before executing anything.
+
 ### `exec`
 Run shell commands. Primary interface to fleet scripts.
 
@@ -81,10 +91,16 @@ Search the web when Captain asks for information or context.
 ### New Task Flow
 ```
 1. exec: taskbus.py create ...
-2. exec: taskbus.py show <ID>  → read Task Card back to verify
-3. sessions_spawn: pilot with Task Card as initialMessage
-4. exec: taskbus.py update <ID> --state RUNNING --session-id <spawned-id>
+2. verify formal task records now exist:
+   - fleet/registry/tasks.json
+   - fleet/tasks/<ID>/TASK.md
+   - fleet/registry/active.md
+3. exec: taskbus.py show <ID>  → read Task Card back to verify
+4. sessions_spawn: pilot with Task Card as initialMessage
+5. exec: taskbus.py update <ID> --state RUNNING --session-id <spawned-id>
 ```
+
+If step 1 or 2 fails, do not spawn a Pilot and do not imply the task is already underway.
 
 ### Task Switch Flow
 ```

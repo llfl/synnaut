@@ -83,10 +83,25 @@ Captain (Human)
 
 - **Bounded recursion**: `allowAgents` enforces spawn topology (who can spawn whom); sailors have `allowAgents: []`
 - **File-based state**: task state lives in files, managed by Task Bus CLI
+- **Canonical runtime root**: `fleet/` and all `workspace-*` directories are siblings under the OpenClaw config directory that contains `openclaw.json`
 - **Parallel task pool**: up to 3 领航员 / Pilots concurrent
 - **Explicit Task Cards**: 领航员 / Pilots receive full context, no implicit inheritance
 - **Dual switching**: thread-binding (mode A) or soft-switch (mode B)
 - **Task Bus**: `fleet/bin/taskbus.py` enforces state machine transitions
+
+## Runtime Root Contract
+
+All relative paths in fleet prompts and docs are resolved from the OpenClaw config root:
+
+```text
+<OPENCLAW_HOME>/
+  openclaw.json
+  fleet/
+  workspace-main/
+  ...
+```
+
+`fleet/` is shared runtime state at the OpenClaw root. It is not workspace-local state.
 
 ## Task State Machine
 

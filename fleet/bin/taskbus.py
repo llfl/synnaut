@@ -3,7 +3,8 @@
 Liquid Fleet 3.0 — Task Bus
 
 CLI tool for the Chief Mate to manage the task registry.
-Operates on the fleet/ directory relative to the OpenClaw workspace.
+Operates on the canonical fleet/ directory under the OpenClaw config root.
+This fleet/ directory is shared runtime state, not a workspace-local folder.
 
 Usage:
     python taskbus.py create  "Build auth module" --pilot pilot-build --priority high
